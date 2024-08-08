@@ -1,0 +1,6 @@
+go.sum
+nc_files
+
+dist
+nc_files/
+logs/
