@@ -2,7 +2,7 @@
 NAME = nav-green-download
 
 # 主版本
-VERSION ?= v0.0.2
+VERSION ?= v0.0.3
 
 # 目标输出目录
 DIST_FOLDER := dist

@@ -1,4 +1,4 @@
-package mfwam
+package seaice
 
 import (
 	"context"
@@ -20,13 +20,13 @@ func ExecuteScript(startStr, endStr string) error {
 		return fmt.Errorf("end 时间解析失败: %v", err)
 	}
 
-	mfwam := server.NewMFWAMDownloader()
-	defer mfwam.Stop(context.TODO())
+	seaIce := server.NewSeaIceDownloader()
+	defer seaIce.Stop(context.TODO())
 
 	for !start.After(end) {
-		logrus.Infof("开始下载: %v MFWAM NC数据文件", start)
-		mfwam.DownloadByDate(start)
-		start = start.Add(time.Hour * 12)
+		logrus.Infof("开始下载: %v 海冰NC数据文件", start)
+		seaIce.DownloadByDate(start)
+		start = start.Add(time.Hour * 24)
 	}
 
 	return nil

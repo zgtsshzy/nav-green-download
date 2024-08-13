@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"nav-green-download/cmd/scripts/mfwam"
+	"nav-green-download/cmd/scripts/seaice"
 	"nav-green-download/cmd/scripts/smoc"
 	"nav-green-download/pkg/conf"
 	"os"
@@ -39,7 +40,7 @@ func getFlags(info *Info) []cli.Flag {
 		Name:    "type",
 		Aliases: []string{"t"},
 		EnvVars: []string{
-			"smoc", "mfwam",
+			"smoc", "mfwam", "sea_ice",
 		},
 		Value:       "",
 		Required:    true,
@@ -87,6 +88,8 @@ func getAction(info *Info) func(*cli.Context) error {
 			return smoc.ExecuteScript(info.StartTime, info.EndTime)
 		case "mfwam":
 			return mfwam.ExecuteScript(info.StartTime, info.EndTime)
+		case "sea_ice":
+			return seaice.ExecuteScript(info.StartTime, info.EndTime)
 		default:
 			return fmt.Errorf("type: %s is invalid", info.Type)
 		}

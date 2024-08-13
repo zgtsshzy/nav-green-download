@@ -18,10 +18,11 @@ func init() {
 func main() {
 	smoc := server.NewSMOCDownloader()
 	mfwam := server.NewMFWAMDownloader()
+	seaIce := server.NewSeaIceDownloader()
 
 	manager := manage.New(
 		"气象源数据处理",
-		manage.Server(smoc, mfwam),
+		manage.Server(smoc, mfwam, seaIce),
 		manage.BeforeStart(BeforeStartFunc),
 		manage.AfterStop(AfterStopFunc),
 		manage.Signal(syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT),

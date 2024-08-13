@@ -14,10 +14,11 @@ func Get() *Conf {
 }
 
 type Conf struct {
-	SMOCDir  string `mapstructure:"SMOC_DIR"`
-	MFWAMDir string `mapstructure:"MFWAM_DIR"`
-	ECDir    string `mapstructure:"EC_DIR"`
-	Log      Log    `mapstructure:"LOG"`
+	SMOCDir   string `mapstructure:"SMOC_DIR"`
+	MFWAMDir  string `mapstructure:"MFWAM_DIR"`
+	SeaIceDir string `mapstructure:"SEA_ICE_DIR"`
+	ECDir     string `mapstructure:"EC_DIR"`
+	Log       Log    `mapstructure:"LOG"`
 }
 
 func New() *Conf {
@@ -25,6 +26,7 @@ func New() *Conf {
 
 	config.SMOCDir = viper.GetString("SMOC_DIR")
 	config.MFWAMDir = viper.GetString("MFWAM_DIR")
+	config.SeaIceDir = viper.GetString("SEA_ICE_DIR")
 	config.ECDir = viper.GetString("EC_DIR")
 
 	config.Log.File = viper.GetString("LOG_FILE")
