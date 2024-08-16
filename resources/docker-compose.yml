@@ -2,10 +2,11 @@ version: '3'
 
 services:
   nav_green_download:
-    image: nav-green-download:v0.0.3
+    image: nav-green-download:v0.0.4
     container_name: nav-green-download
     restart: always
     volumes:
       - /data1/alist_share/nc_files/smoc:/nc_files/smoc
       - /data1/alist_share/nc_files/mfwam:/nc_files/mfwam
       - /data1/alist_share/nc_files/sea_ice:/nc_files/sea_ice
+      - /data1/alist_share/nc_files/ec_0p25:/nc_files/ec_0p25

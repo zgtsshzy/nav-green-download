@@ -38,18 +38,20 @@ func GetECFirstLevel() ([]string, error) {
 // 12z/           12-08-2024 19:55
 // 18z/    	      13-08-2024 01:12
 func GetECSecondLevel(level string) ([]string, error) {
-	htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
-	if err != nil {
-		return nil, fmt.Errorf("ec 第二级页面获取失败: %v", err)
-	}
+	// htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("ec 第二级页面获取失败: %v", err)
+	// }
 
-	var folders []string
-	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
-	for _, value := range valueList {
-		folders = append(folders, htmlquery.InnerText(value))
-	}
+	// var folders []string
+	// valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
+	// for _, value := range valueList {
+	// 	folders = append(folders, htmlquery.InnerText(value))
+	// }
 
-	return folders, nil
+	// return folders, nil
+
+	return []string{"00z/"}, nil
 }
 
 // 获取 EC 官网第三级页面信息
