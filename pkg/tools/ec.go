@@ -3,6 +3,7 @@ package tools
 import (
 	"fmt"
 	"nav-green-download/pkg/global"
+	"strings"
 
 	"github.com/antchfx/htmlquery"
 )
@@ -136,6 +137,11 @@ func GetECSixthFiles(level string) ([]string, error) {
 	var folders []string
 	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
 	for _, value := range valueList {
+		name := htmlquery.InnerText(value)
+		if strings.Contains(name, ".index") {
+			continue
+		}
+
 		folders = append(folders, htmlquery.InnerText(value))
 	}
 
