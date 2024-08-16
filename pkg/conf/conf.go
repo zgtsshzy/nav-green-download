@@ -18,6 +18,7 @@ type Conf struct {
 	MFWAMDir  string `mapstructure:"MFWAM_DIR"`
 	SeaIceDir string `mapstructure:"SEA_ICE_DIR"`
 	ECDir     string `mapstructure:"EC_DIR"`
+	GFSDir    string `mapstructure:"GFS_DIR"`
 	Log       Log    `mapstructure:"LOG"`
 }
 
@@ -28,11 +29,13 @@ func New() *Conf {
 	config.MFWAMDir = viper.GetString("MFWAM_DIR")
 	config.SeaIceDir = viper.GetString("SEA_ICE_DIR")
 	config.ECDir = viper.GetString("EC_DIR")
+	config.GFSDir = viper.GetString("GFS_DIR")
+
+	config.Log = NewLog()
 
 	config.Log.File = viper.GetString("LOG_FILE")
 	config.Log.Level = viper.GetString("LOG_LEVEL")
 
-	config.Log = NewLog()
 	config.Log.InitLog()
 
 	return config

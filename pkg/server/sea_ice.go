@@ -25,6 +25,7 @@ func NewSeaIceDownloader() *SeaIceDownloader {
 }
 
 func (srv *SeaIceDownloader) Start(ctx context.Context) error {
+	time.Sleep(time.Minute * 30)
 	ticker := time.NewTicker(time.Hour)
 
 	for {

@@ -38,34 +38,63 @@ func GetECFirstLevel() ([]string, error) {
 // 12z/           12-08-2024 19:55
 // 18z/    	      13-08-2024 01:12
 func GetECSecondLevel(level string) ([]string, error) {
-	// htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
-	// if err != nil {
-	// 	return nil, fmt.Errorf("ec 第二级页面获取失败: %v", err)
-	// }
+	htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
+	if err != nil {
+		return nil, fmt.Errorf("ec 第二级页面获取失败: %v", err)
+	}
 
-	// var folders []string
-	// valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
-	// for _, value := range valueList {
-	// 	folders = append(folders, htmlquery.InnerText(value))
-	// }
+	var folders []string
+	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
+	for _, value := range valueList {
+		folder := htmlquery.InnerText(value)
+		if folder == "00z/" {
+			folders = append(folders, htmlquery.InnerText(value))
+		}
+	}
 
-	// return folders, nil
-
-	return []string{"00z/"}, nil
+	return folders, nil
 }
 
 // 获取 EC 官网第三级页面信息
 // aifs/          12-08-2024 07:55
 // ifs/           12-08-2024 08:40
 func GetECThirdLevel(level string) ([]string, error) {
-	return []string{"ifs/"}, nil
+	htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
+	if err != nil {
+		return nil, fmt.Errorf("ec 第三级页面获取失败: %v", err)
+	}
+
+	var folders []string
+	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
+	for _, value := range valueList {
+		folder := htmlquery.InnerText(value)
+		if folder == "ifs/" {
+			folders = append(folders, htmlquery.InnerText(value))
+		}
+	}
+
+	return folders, nil
 }
 
 // 获取 EC 官网第四级页面信息
 // 0p25/          12-08-2024 08:40
 // 0p4-beta/      12-08-2024 08:40
 func GetECFourthLevel(level string) ([]string, error) {
-	return []string{"0p25/"}, nil
+	htmlNode, err := htmlquery.LoadURL(global.ECBaseUrl + level)
+	if err != nil {
+		return nil, fmt.Errorf("ec 第四级页面获取失败: %v", err)
+	}
+
+	var folders []string
+	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
+	for _, value := range valueList {
+		folder := htmlquery.InnerText(value)
+		if folder == "0p25/" {
+			folders = append(folders, htmlquery.InnerText(value))
+		}
+	}
+
+	return folders, nil
 }
 
 // 获取 EC 官网第五级页面信息
@@ -82,7 +111,10 @@ func GetECFifthLevel(level string) ([]string, error) {
 	var folders []string
 	valueList := htmlquery.Find(htmlNode, `//*[@id="outerTable"]/tbody/tr[4]/td/pre[2]/a`)
 	for _, value := range valueList {
-		folders = append(folders, htmlquery.InnerText(value))
+		folder := htmlquery.InnerText(value)
+		if folder == "oper/" || folder == "wave/" {
+			folders = append(folders, htmlquery.InnerText(value))
+		}
 	}
 
 	return folders, nil

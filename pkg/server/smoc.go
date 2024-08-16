@@ -25,6 +25,7 @@ func NewSMOCDownloader() *SMOCDownloader {
 }
 
 func (srv *SMOCDownloader) Start(ctx context.Context) error {
+	time.Sleep(time.Minute * 40)
 	ticker := time.NewTicker(time.Hour)
 
 	for {

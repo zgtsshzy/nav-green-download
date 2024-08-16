@@ -17,4 +17,7 @@ const (
 	SeaIceBaseUrl = "https://s3.waw3-1.cloudferro.com/mdl-native-14/"
 
 	ECBaseUrl = "https://data.ecmwf.int/forecasts/"
+
+	// https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/
+	GFSBaseUrl = "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 )

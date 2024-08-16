@@ -21,7 +21,7 @@ func NewECDownloader() *ECDownloader {
 	config := conf.Get()
 
 	if _, err := os.Stat(config.ECDir); err != nil {
-		os.Mkdir(config.ECDir, 0666)
+		os.Mkdir(config.ECDir, 0777)
 	}
 
 	return &ECDownloader{}
@@ -29,12 +29,11 @@ func NewECDownloader() *ECDownloader {
 
 func (srv *ECDownloader) Start(ctx context.Context) error {
 	ticker := time.NewTicker(time.Hour)
-	childCtx, cancel := context.WithCancel(ctx)
+	childCtx := context.WithoutCancel(ctx)
 
 	for {
 		select {
 		case <-ctx.Done():
-			cancel()
 			return fmt.Errorf("程序停止")
 		case <-ticker.C:
 			srv.Download(childCtx)
