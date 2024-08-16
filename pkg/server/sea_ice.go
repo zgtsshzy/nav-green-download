@@ -11,20 +11,20 @@ import (
 	"time"
 )
 
-type SMOCDownloader struct {
+type SeaIceDownloader struct {
 }
 
-func NewSMOCDownloader() *SMOCDownloader {
+func NewSeaIceDownloader() *SeaIceDownloader {
 	config := conf.Get()
 
-	if _, err := os.Stat(config.SMOCDir); err != nil {
-		os.Mkdir(config.SMOCDir, 0777)
+	if _, err := os.Stat(config.SeaIceDir); err != nil {
+		os.Mkdir(config.SeaIceDir, 0777)
 	}
 
-	return &SMOCDownloader{}
+	return &SeaIceDownloader{}
 }
 
-func (srv *SMOCDownloader) Start(ctx context.Context) error {
+func (srv *SeaIceDownloader) Start(ctx context.Context) error {
 	ticker := time.NewTicker(time.Hour)
 
 	for {
@@ -49,18 +49,18 @@ func (srv *SMOCDownloader) Start(ctx context.Context) error {
 	}
 }
 
-func (srv *SMOCDownloader) Stop(ctx context.Context) error {
+func (srv *SeaIceDownloader) Stop(ctx context.Context) error {
 
 	return nil
 }
 
-func (srv *SMOCDownloader) DownloadByDate(date time.Time) error {
+func (srv *SeaIceDownloader) DownloadByDate(date time.Time) error {
 	//////////////////////////////////////////////////////////////////////////////
 	// 确认文件是否已经下载过，如果和服务器一样则不需要再下载
-	localName := getSMOCLocalNameByDate(date)
-	remoteName, err := tools.GetSMOCNameByDate(date)
+	localName := getSeaIceLocalNameByDate(date)
+	remoteName, err := tools.GetSeaIceNameByDate(date)
 	if err != nil {
-		return fmt.Errorf("获取官网: %v SMOC 文件名失败: %v", date, err)
+		return fmt.Errorf("获取官网: %v SeaIce 文件名失败: %v", date, err)
 	}
 
 	if localName != "" && localName == remoteName {
@@ -69,16 +69,16 @@ func (srv *SMOCDownloader) DownloadByDate(date time.Time) error {
 
 	//////////////////////////////////////////////////////////////////////////////
 	{
-		// 删除过期的 SMOC 文件
-		path := getSMOCLocalPathByDate(date)
+		// 删除过期的 SeaIce 文件
+		path := getSeaIceLocalPathByDate(date)
 		if path != "" {
 			os.Remove(path)
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	// 下载最新的 SMOC 文件到本地
-	localPath, err := generateSMOCLocalPathByDate(date)
+	// 下载最新的 SeaIce 文件到本地
+	localPath, err := generateSeaIceLocalPathByDate(date)
 	if err != nil {
 		return err
 	}
@@ -87,29 +87,29 @@ func (srv *SMOCDownloader) DownloadByDate(date time.Time) error {
 		return nil
 	}
 
-	url, err := tools.GetSMOCDownloadUrlByDate(date)
+	url, err := tools.GetSeaIceDownloadUrlByDate(date)
 	if err != nil {
-		return fmt.Errorf("获取 SMOC : %v 文件下载链接失败: %v", date, err)
+		return fmt.Errorf("获取 SeaIce : %v 文件下载链接失败: %v", date, err)
 	}
 
 	if err := tools.DownloadNCFile(localPath, url); err != nil {
-		return fmt.Errorf("下载 SMOC : %v 文件失败: %v", date, err)
+		return fmt.Errorf("下载 SeaIce : %v 文件失败: %v", date, err)
 	}
 
 	return nil
 }
 
-func generateSMOCLocalPathByDate(date time.Time) (string, error) {
-	url, err := tools.GetSMOCDownloadUrlByDate(date)
+func generateSeaIceLocalPathByDate(date time.Time) (string, error) {
+	url, err := tools.GetSeaIceDownloadUrlByDate(date)
 	if err != nil {
-		return "", fmt.Errorf("获取 SMOC : %v 文件下载链接失败: %v", date, err)
+		return "", fmt.Errorf("获取 SeaIce : %v 文件下载链接失败: %v", date, err)
 	}
 
 	itemList := strings.Split(url, "/")
 	fileName := itemList[len(itemList)-1]
 
 	path := filepath.Join(
-		conf.Get().SMOCDir,
+		conf.Get().SeaIceDir,
 		fmt.Sprintf("%d", date.Year()),
 		fmt.Sprintf("%02d", date.Month()),
 		fileName,
@@ -118,12 +118,10 @@ func generateSMOCLocalPathByDate(date time.Time) (string, error) {
 	return path, nil
 }
 
-// 根据日期获取 SMOC 本地文件名称
-func getSMOCLocalNameByDate(date time.Time) string {
-	dateStr := date.Format("20060102")
-
+// 根据日期获取 SeaIce 本地文件名称
+func getSeaIceLocalNameByDate(date time.Time) string {
 	dir := filepath.Join(
-		conf.Get().SMOCDir,
+		conf.Get().SeaIceDir,
 		fmt.Sprintf("%d", date.Year()),
 		fmt.Sprintf("%02d", date.Month()),
 	)
@@ -135,11 +133,12 @@ func getSMOCLocalNameByDate(date time.Time) string {
 
 	for _, entry := range entries {
 		list := strings.Split(entry.Name(), "_")
-		if len(list) != 3 {
+		if len(list) != 7 {
 			continue
 		}
 
-		if list[1] == dateStr {
+		dateStr := strings.Split(list[1], "-")[0]
+		if dateStr == date.Format("20060102") {
 			return entry.Name()
 		}
 	}
@@ -147,12 +146,10 @@ func getSMOCLocalNameByDate(date time.Time) string {
 	return ""
 }
 
-// 根据日期获取 SMOC 本地文件路径
-func getSMOCLocalPathByDate(date time.Time) string {
-	dateStr := date.Format("20060102")
-
+// 根据日期获取 SeaIce 本地文件路径
+func getSeaIceLocalPathByDate(date time.Time) string {
 	dir := filepath.Join(
-		conf.Get().SMOCDir,
+		conf.Get().SeaIceDir,
 		fmt.Sprintf("%d", date.Year()),
 		fmt.Sprintf("%02d", date.Month()),
 	)
@@ -163,12 +160,14 @@ func getSMOCLocalPathByDate(date time.Time) string {
 	}
 
 	for _, entry := range entries {
+		// glo12_rg_1d-m_20240801-20240801_2D_hcst_R20240814.nc
 		list := strings.Split(entry.Name(), "_")
-		if len(list) != 3 {
+		if len(list) != 7 {
 			continue
 		}
 
-		if list[1] == dateStr {
+		dateStr := strings.Split(list[1], "-")[0]
+		if dateStr == date.Format("20060102") {
 			return filepath.Join(dir, entry.Name())
 		}
 	}

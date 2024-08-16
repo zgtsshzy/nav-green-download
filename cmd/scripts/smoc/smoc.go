@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"nav-green-download/pkg/server"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 func ExecuteScript(startStr, endStr string) error {
@@ -22,6 +24,7 @@ func ExecuteScript(startStr, endStr string) error {
 	defer smoc.Stop(context.TODO())
 
 	for !start.After(end) {
+		logrus.Infof("开始下载: %v SMOC NC数据文件", start)
 		smoc.DownloadByDate(start)
 		start = start.Add(time.Hour * 24)
 	}

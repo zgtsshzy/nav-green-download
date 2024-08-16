@@ -14,10 +14,11 @@ RUN GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -o ./dist/nav-green-download 
 # 构建镜像
 FROM alpine:3.20 as prod
 
-ENV SMOC_DIR=./nc_files/smoc    \
-    MFWAM_DIR=./nc_files/mfwam  \
-    EC_DIR=./nc_files/ec_0p25   \
-    LOG_FILE=""                 \
+ENV SMOC_DIR=./nc_files/smoc        \
+    MFWAM_DIR=./nc_files/mfwam      \
+    SEA_ICE_DIR=./nc_files/sea_ice  \
+    EC_DIR=./nc_files/ec_0p25       \
+    LOG_FILE=""                     \
     LOG_LEVEL="info"         
 
 # 在build阶段复制时区到
