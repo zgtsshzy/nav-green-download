@@ -4,6 +4,7 @@
 - EC 气象数据下载
 ```
 https://data.ecmwf.int/forecasts/
+https://www.ecmwf.int/en/forecasts/datasets/open-data
 ```
 
 - SMOC 气象数据下载

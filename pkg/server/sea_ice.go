@@ -21,7 +21,7 @@ func NewSeaIceDownloader() *SeaIceDownloader {
 		os.Mkdir(config.SeaIceDir, 0777)
 	}
 
-	return nil
+	return &SeaIceDownloader{}
 }
 
 func (srv *SeaIceDownloader) Start(ctx context.Context) error {

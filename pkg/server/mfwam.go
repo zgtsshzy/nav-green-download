@@ -21,7 +21,7 @@ func NewMFWAMDownloader() *MFWAMDownloader {
 		os.Mkdir(config.MFWAMDir, 0777)
 	}
 
-	return nil
+	return &MFWAMDownloader{}
 }
 
 func (srv *MFWAMDownloader) Start(ctx context.Context) error {

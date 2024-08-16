@@ -21,7 +21,7 @@ func NewSMOCDownloader() *SMOCDownloader {
 		os.Mkdir(config.SMOCDir, 0777)
 	}
 
-	return nil
+	return &SMOCDownloader{}
 }
 
 func (srv *SMOCDownloader) Start(ctx context.Context) error {
