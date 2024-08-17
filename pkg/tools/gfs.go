@@ -72,7 +72,10 @@ func GetGFSThirdLevel(level string) ([]string, error) {
 	var folders []string
 	valueList := htmlquery.Find(htmlNode, `/html/body/pre/a`)
 	for _, value := range valueList {
-		folders = append(folders, htmlquery.InnerText(value))
+		name := htmlquery.InnerText(value)
+		if name == "atmos/" || name == "wave/" {
+			folders = append(folders, name)
+		}
 	}
 
 	return folders, nil
@@ -96,7 +99,7 @@ func GetGFSFourthLevel(level string) ([]string, error) {
 	valueList := htmlquery.Find(htmlNode, `/html/body/pre/a`)
 	for _, value := range valueList {
 		name := htmlquery.InnerText(value)
-		if strings.Contains(name, ".idx") {
+		if strings.Contains(name, ".idx") || strings.HasSuffix(name, ".anl") {
 			continue
 		}
 

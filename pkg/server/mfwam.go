@@ -31,7 +31,7 @@ func (srv *MFWAMDownloader) Start(ctx context.Context) error {
 	for {
 		select {
 		case <-ctx.Done():
-			return fmt.Errorf("程序停止")
+			return fmt.Errorf("MFWAM 文件下载程序停止")
 		case <-ticker.C:
 			// 从今天开始下载未来 10 天的 NC 文件
 			currentDate, _ := time.Parse(time.DateOnly, time.Now().Format(time.DateOnly))

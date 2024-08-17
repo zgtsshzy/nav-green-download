@@ -35,7 +35,7 @@ func (srv *GFSDownloader) Start(ctx context.Context) error {
 	for {
 		select {
 		case <-ctx.Done():
-			return fmt.Errorf("程序停止")
+			return fmt.Errorf("GFS 文件下载程序停止")
 		case <-ticker.C:
 			srv.Download(childCtx)
 		}
@@ -57,11 +57,12 @@ func (srv *GFSDownloader) Download(ctx context.Context) {
 			return
 		case info, ok := <-ch:
 			if !ok {
+				logrus.Infof("下载任务队列关闭")
 				return
 			}
 
 			if err := tools.DownloadNCFile(info.LocalPath, info.Url); err != nil {
-				logrus.Errorf("EC GFS: %s 下载失败: %v", info.Url, err)
+				logrus.Errorf("GFS: %s 下载失败: %v", info.Url, err)
 			}
 		}
 	}

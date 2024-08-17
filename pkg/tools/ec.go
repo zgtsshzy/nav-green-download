@@ -142,7 +142,9 @@ func GetECSixthFiles(level string) ([]string, error) {
 			continue
 		}
 
-		folders = append(folders, htmlquery.InnerText(value))
+		if strings.Contains(name, ".grib2") {
+			folders = append(folders, name)
+		}
 	}
 
 	return folders, nil

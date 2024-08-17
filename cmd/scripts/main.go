@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"nav-green-download/cmd/scripts/gfs"
 	"nav-green-download/cmd/scripts/mfwam"
 	"nav-green-download/cmd/scripts/seaice"
 	"nav-green-download/cmd/scripts/smoc"
@@ -86,6 +87,8 @@ func getAction(info *Info) func(*cli.Context) error {
 		switch info.Type {
 		case "smoc":
 			return smoc.ExecuteScript(info.StartTime, info.EndTime)
+		case "gfs":
+			return gfs.ExecuteScript(info.StartTime, info.EndTime)
 		case "mfwam":
 			return mfwam.ExecuteScript(info.StartTime, info.EndTime)
 		case "sea_ice":

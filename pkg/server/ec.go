@@ -34,7 +34,7 @@ func (srv *ECDownloader) Start(ctx context.Context) error {
 	for {
 		select {
 		case <-ctx.Done():
-			return fmt.Errorf("程序停止")
+			return fmt.Errorf("EC 文件下载程序停止")
 		case <-ticker.C:
 			srv.Download(childCtx)
 		}
