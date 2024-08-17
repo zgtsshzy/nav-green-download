@@ -25,7 +25,6 @@ func NewSeaIceDownloader() *SeaIceDownloader {
 }
 
 func (srv *SeaIceDownloader) Start(ctx context.Context) error {
-	time.Sleep(time.Minute * 30)
 	ticker := time.NewTicker(time.Hour)
 
 	for {
@@ -46,6 +45,8 @@ func (srv *SeaIceDownloader) Start(ctx context.Context) error {
 				srv.DownloadByDate(currentDate)
 				currentDate = currentDate.Add(time.Hour * -24)
 			}
+
+			ticker.Reset(time.Hour)
 		}
 	}
 }

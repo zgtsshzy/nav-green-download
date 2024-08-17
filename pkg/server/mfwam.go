@@ -25,7 +25,6 @@ func NewMFWAMDownloader() *MFWAMDownloader {
 }
 
 func (srv *MFWAMDownloader) Start(ctx context.Context) error {
-	time.Sleep(time.Minute * 20)
 	ticker := time.NewTicker(time.Hour)
 
 	for {
@@ -46,6 +45,8 @@ func (srv *MFWAMDownloader) Start(ctx context.Context) error {
 				srv.DownloadByDate(currentDate)
 				currentDate = currentDate.Add(time.Hour * -12)
 			}
+
+			ticker.Reset(time.Hour)
 		}
 	}
 }

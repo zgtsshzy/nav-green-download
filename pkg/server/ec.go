@@ -37,6 +37,7 @@ func (srv *ECDownloader) Start(ctx context.Context) error {
 			return fmt.Errorf("EC 文件下载程序停止")
 		case <-ticker.C:
 			srv.Download(childCtx)
+			ticker.Reset(time.Hour)
 		}
 	}
 }

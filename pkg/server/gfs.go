@@ -28,7 +28,6 @@ func NewGFSDownloader() *GFSDownloader {
 }
 
 func (srv *GFSDownloader) Start(ctx context.Context) error {
-	time.Sleep(time.Minute * 10)
 	ticker := time.NewTicker(time.Hour)
 	childCtx := context.WithoutCancel(ctx)
 
@@ -38,6 +37,7 @@ func (srv *GFSDownloader) Start(ctx context.Context) error {
 			return fmt.Errorf("GFS 文件下载程序停止")
 		case <-ticker.C:
 			srv.Download(childCtx)
+			ticker.Reset(time.Hour)
 		}
 	}
 }
