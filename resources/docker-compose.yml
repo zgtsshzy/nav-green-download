@@ -10,3 +10,4 @@ services:
       - /data1/alist_share/nc_files/mfwam:/nc_files/mfwam
       - /data1/alist_share/nc_files/sea_ice:/nc_files/sea_ice
       - /data1/alist_share/nc_files/ec_0p25:/nc_files/ec_0p25
+      - /data1/alist_share/nc_files/gfs:/nc_files/gfs

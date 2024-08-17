@@ -18,6 +18,7 @@ ENV SMOC_DIR=./nc_files/smoc        \
     MFWAM_DIR=./nc_files/mfwam      \
     SEA_ICE_DIR=./nc_files/sea_ice  \
     EC_DIR=./nc_files/ec_0p25       \
+    GFS_DIR=./nc_files/gfs          \
     LOG_FILE=""                     \
     LOG_LEVEL="info"         
 
