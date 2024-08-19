@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"nav-green-download/pkg/conf"
 	"nav-green-download/pkg/global"
-	"nav-green-download/pkg/tools"
+	"nav-green-download/pkg/tools/download"
 	"os"
 	"path/filepath"
 	"strings"
@@ -65,7 +65,7 @@ func (srv *ECDownloader) Download(ctx context.Context) {
 				return
 			}
 
-			if err := tools.DownloadNCFile(info.LocalPath, info.Url); err != nil {
+			if err := download.DownloadNCFile(info.LocalPath, info.Url); err != nil {
 				logrus.Errorf("EC 文件: %s 下载失败: %v", info.Url, err)
 			}
 		}
@@ -75,7 +75,7 @@ func (srv *ECDownloader) Download(ctx context.Context) {
 func (srv *ECDownloader) getFirstLevelInfo(ch chan DownloadInfo) error {
 	defer close(ch)
 
-	firstLevels, err := tools.GetECFirstLevel()
+	firstLevels, err := download.GetECFirstLevel()
 	if err != nil {
 		return fmt.Errorf("GetECFirstLevel: %v", err)
 	}
@@ -98,7 +98,7 @@ func (srv *ECDownloader) getFirstLevelInfo(ch chan DownloadInfo) error {
 }
 
 func (srv *ECDownloader) getSecondLevelInfo(level string, ch chan DownloadInfo) error {
-	secondLevels, err := tools.GetECSecondLevel(level)
+	secondLevels, err := download.GetECSecondLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetECSecondLevel: %v", err)
 	}
@@ -121,7 +121,7 @@ func (srv *ECDownloader) getSecondLevelInfo(level string, ch chan DownloadInfo) 
 }
 
 func (srv *ECDownloader) getThirdLevelInfo(level string, ch chan DownloadInfo) error {
-	thirdLevels, err := tools.GetECThirdLevel(level)
+	thirdLevels, err := download.GetECThirdLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetECThirdLevel: %v", err)
 	}
@@ -144,7 +144,7 @@ func (srv *ECDownloader) getThirdLevelInfo(level string, ch chan DownloadInfo) e
 }
 
 func (srv *ECDownloader) getFourthLevelInfo(level string, ch chan DownloadInfo) error {
-	fourthLevels, err := tools.GetECFourthLevel(level)
+	fourthLevels, err := download.GetECFourthLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetECFourthLevel: %v", err)
 	}
@@ -167,7 +167,7 @@ func (srv *ECDownloader) getFourthLevelInfo(level string, ch chan DownloadInfo) 
 }
 
 func (srv *ECDownloader) getFifthLevelInfo(level string, ch chan DownloadInfo) error {
-	fifthLevels, err := tools.GetECFifthLevel(level)
+	fifthLevels, err := download.GetECFifthLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetECFifthLevel: %v", err)
 	}
@@ -190,7 +190,7 @@ func (srv *ECDownloader) getFifthLevelInfo(level string, ch chan DownloadInfo) e
 }
 
 func (srv *ECDownloader) getSixthLevelInfo(level string, ch chan DownloadInfo) error {
-	sixthLevels, err := tools.GetECSixthFiles(level)
+	sixthLevels, err := download.GetECSixthFiles(level)
 	if err != nil {
 		return fmt.Errorf("GetECSixthFiles: %v", err)
 	}

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"nav-green-download/pkg/conf"
-	"nav-green-download/pkg/tools"
+	"nav-green-download/pkg/tools/download"
 	"os"
 	"path/filepath"
 	"strings"
@@ -60,7 +60,7 @@ func (srv *SeaIceDownloader) DownloadByDate(date time.Time) error {
 	//////////////////////////////////////////////////////////////////////////////
 	// 确认文件是否已经下载过，如果和服务器一样则不需要再下载
 	localName := getSeaIceLocalNameByDate(date)
-	remoteName, err := tools.GetSeaIceNameByDate(date)
+	remoteName, err := download.GetSeaIceNameByDate(date)
 	if err != nil {
 		return fmt.Errorf("获取官网: %v SeaIce 文件名失败: %v", date, err)
 	}
@@ -89,12 +89,12 @@ func (srv *SeaIceDownloader) DownloadByDate(date time.Time) error {
 		return nil
 	}
 
-	url, err := tools.GetSeaIceDownloadUrlByDate(date)
+	url, err := download.GetSeaIceDownloadUrlByDate(date)
 	if err != nil {
 		return fmt.Errorf("获取 SeaIce : %v 文件下载链接失败: %v", date, err)
 	}
 
-	if err := tools.DownloadNCFile(localPath, url); err != nil {
+	if err := download.DownloadNCFile(localPath, url); err != nil {
 		return fmt.Errorf("下载 SeaIce : %v 文件失败: %v", date, err)
 	}
 
@@ -102,7 +102,7 @@ func (srv *SeaIceDownloader) DownloadByDate(date time.Time) error {
 }
 
 func generateSeaIceLocalPathByDate(date time.Time) (string, error) {
-	url, err := tools.GetSeaIceDownloadUrlByDate(date)
+	url, err := download.GetSeaIceDownloadUrlByDate(date)
 	if err != nil {
 		return "", fmt.Errorf("获取 SeaIce : %v 文件下载链接失败: %v", date, err)
 	}

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"nav-green-download/pkg/conf"
 	"nav-green-download/pkg/global"
-	"nav-green-download/pkg/tools"
+	"nav-green-download/pkg/tools/download"
 	"os"
 	"path/filepath"
 	"strings"
@@ -61,7 +61,7 @@ func (srv *GFSDownloader) Download(ctx context.Context) {
 				return
 			}
 
-			if err := tools.DownloadNCFile(info.LocalPath, info.Url); err != nil {
+			if err := download.DownloadNCFile(info.LocalPath, info.Url); err != nil {
 				logrus.Errorf("GFS: %s 下载失败: %v", info.Url, err)
 			}
 		}
@@ -71,7 +71,7 @@ func (srv *GFSDownloader) Download(ctx context.Context) {
 func (srv *GFSDownloader) getFirstLevelInfo(ch chan DownloadInfo) error {
 	defer close(ch)
 
-	firstLevels, err := tools.GetGFSFirstLevel()
+	firstLevels, err := download.GetGFSFirstLevel()
 	if err != nil {
 		return fmt.Errorf("GetGFSFirstLevel: %v", err)
 	}
@@ -94,7 +94,7 @@ func (srv *GFSDownloader) getFirstLevelInfo(ch chan DownloadInfo) error {
 }
 
 func (srv *GFSDownloader) getSecondLevelInfo(level string, ch chan DownloadInfo) error {
-	secondLevels, err := tools.GetGFSSecondLevel(level)
+	secondLevels, err := download.GetGFSSecondLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetGFSSecondLevel: %v", err)
 	}
@@ -117,7 +117,7 @@ func (srv *GFSDownloader) getSecondLevelInfo(level string, ch chan DownloadInfo)
 }
 
 func (srv *GFSDownloader) getThirdLevelInfo(level string, ch chan DownloadInfo) error {
-	thirdLevels, err := tools.GetGFSThirdLevel(level)
+	thirdLevels, err := download.GetGFSThirdLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetGFSThirdLevel: %v", err)
 	}
@@ -140,7 +140,7 @@ func (srv *GFSDownloader) getThirdLevelInfo(level string, ch chan DownloadInfo) 
 }
 
 func (srv *GFSDownloader) getFourthLevelInfo(level string, ch chan DownloadInfo) error {
-	fourthLevels, err := tools.GetGFSFourthLevel(level)
+	fourthLevels, err := download.GetGFSFourthLevel(level)
 	if err != nil {
 		return fmt.Errorf("GetGFSFourthLevel: %v", err)
 	}
