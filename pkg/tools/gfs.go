@@ -73,7 +73,7 @@ func GetGFSThirdLevel(level string) ([]string, error) {
 	valueList := htmlquery.Find(htmlNode, `/html/body/pre/a`)
 	for _, value := range valueList {
 		name := htmlquery.InnerText(value)
-		if name == "atmos/" || name == "wave/" {
+		if name == "atmos/" {
 			folders = append(folders, name)
 		}
 	}
