@@ -4,6 +4,7 @@ type ContourLineConf struct {
 	MinValue float32 // 最大值
 	MaxValue float32 // 最小值
 	Step     float32 // 步长
+	Num      int     // 分段个数
 }
 
 // 气象文件解析器
